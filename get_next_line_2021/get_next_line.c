@@ -1,26 +1,14 @@
-#include <stdlib.h>
-#include <unistd.h>
+#include "get_next_line.h"
 
-int	ft_strlen(char *s)
+char	*ft_strdup(char *s)
 {
-	int i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	if (!s)
-		return (0);
 	while (s[i])
 		i++;
-	return (i);
-}
-
-char *ft_strdup(char *s)
-{
-	char *str;
-	int		i;
-
-	if (!s)
-		return (NULL);
-	str = (char *) malloc(ft_strlen(s) + 1);
+	str = (char *) malloc(i + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -38,9 +26,10 @@ char	*ft_strjoin(char *s, char c)
 	char	*str;
 	int		i;
 
-	if (!s)
-		return (NULL);
-	str = malloc(ft_strlen(s) + 2);
+	i = 0;
+	while (s[i])
+		i++;
+	str = (char *) malloc(i + 2);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -57,9 +46,10 @@ char	*ft_strjoin(char *s, char c)
 
 char	*get_next_line(int fd)
 {
-	int		ret;
 	char	buf;
 	char	*line;
+	int		ret;
+	int		i;
 
 	if (fd < 0)
 		return (NULL);
@@ -70,12 +60,15 @@ char	*get_next_line(int fd)
 		if (buf == '\n')
 			break ;
 	}
-	if (ret == -1)
+	i = 0;
+	while (line[i])
+		i++;
+	if (i == 0)
 	{
 		free(line);
 		line = NULL;
 	}
-	if (ft_strlen(line) == 0)
+	if (ret == -1)
 	{
 		free(line);
 		line = NULL;
